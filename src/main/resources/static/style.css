@@ -78,6 +78,12 @@ ul li {
     background-color: #fff;
 }
 
+label {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
 /* Phones and tablets*/
 @media only screen and (max-width: 1099px) {
     .grid-container {

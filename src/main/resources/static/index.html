@@ -24,6 +24,7 @@
             <h2>Create new item</h2>
             <form id="addItemForm" onsubmit="submitItemForm(event)">
                 <input type="text" name="name" placeholder="Item Name" required>
+                <label for="categorySelect">Category:</label>
                 <select id="categorySelect">
                     <!-- Categories will be populated here -->
                 </select>
@@ -36,6 +37,7 @@
             <h2>Add item to Shopping List</h2>
             <div>
                 <input type="text" id="listName" placeholder="Shopping List Name" required>
+                <label for="itemSelect">Item:</label>
                 <select id="itemSelect">
                     <!-- Items will be populated here -->
                 </select>
@@ -66,9 +68,11 @@
 
             <h2>Add Category to Store</h2>
             <form id="addCategoryToStoreForm">
+                <label for="storeSelect">Store:</label>
                 <select id="storeSelect">
                     <!-- Stores will be populated here -->
                 </select>
+                <label for="categoryForStore">Category:</label>
                 <select id="categoryForStore">
                     <!-- Category options will be added here -->
                 </select>

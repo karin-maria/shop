@@ -10,6 +10,7 @@ function fetchItems() {
         .then(response => response.json())
         .then(data => {
             const itemSelect = document.getElementById('itemSelect');
+            itemSelect.innerHTML = '';
             data.forEach(item => {
                 let option = new Option(item.name, item.id);
                 itemSelect.add(option);
@@ -23,6 +24,7 @@ function fetchShoppingLists() {
         .then(response => response.json())
         .then(data => {
             const select = document.getElementById('shoppingListsSelect');
+            shoppingListsSelect.innerHTML = '';
             data.forEach(list => {
                 let option = new Option(list.name, list.id);
                 select.add(option);
@@ -36,11 +38,13 @@ function fetchCategories() {
         .then(response => response.json())
         .then(data => {
             const categorySelect = document.getElementById('categorySelect');
+            categorySelect.innerHTML = '';
             data.forEach(category => {
                 let option = new Option(category.name, category.id);
                 categorySelect.add(option);
             });
             const categoryForStore = document.getElementById('categoryForStore');
+            categoryForStore.innerHTML = '';
             data.forEach(category => {
                 let option = new Option(category.name, category.id);
                 categoryForStore.add(option);
@@ -54,6 +58,7 @@ function fetchStores() {
         .then(response => response.json())
         .then(data => {
             const storeSelect = document.getElementById('storeSelect');
+            storeSelect.innerHTML = '';
             data.forEach(store => {
                 let option = new Option(store.name, store.id);
                 storeSelect.add(option);
