@@ -27,7 +27,7 @@ public class StoreCategory {
     private Category category;
 
     @Column(name="categoryOrder")
-    private int categoryOrder;
+    private Long categoryOrder;
 
     public StoreCategory() {
     }
@@ -56,11 +56,11 @@ public class StoreCategory {
         this.category = category;
     }
 
-    public int getCategoryOrder() {
+    public Long getCategoryOrder() {
         return categoryOrder;
     }
 
-    public void setCategoryOrder(int categoryOrder) {
+    public void setCategoryOrder(Long categoryOrder) {
         this.categoryOrder = categoryOrder;
     }
 }

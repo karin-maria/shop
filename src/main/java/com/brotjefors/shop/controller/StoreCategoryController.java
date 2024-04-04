@@ -1,6 +1,7 @@
 package com.brotjefors.shop.controller;
 
 import com.brotjefors.shop.model.StoreCategory;
+import com.brotjefors.shop.dto.StoreCategoryDto;
 import com.brotjefors.shop.service.StoreCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,9 @@ public class StoreCategoryController {
     @Autowired
     private StoreCategoryService storeCategoryService;
 
-    @PostMapping("/")
-    public StoreCategory addStoreCategory(@RequestBody StoreCategory storeCategory) {
-        return storeCategoryService.saveStoreCategory(storeCategory);
+    @PostMapping("/add")
+    public StoreCategory addStoreCategory(@RequestBody StoreCategoryDto storeCategoryDto) {
+        return storeCategoryService.saveStoreCategory(storeCategoryDto);
     }
 
     @GetMapping("/store/{storeId}")

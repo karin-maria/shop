@@ -1,8 +1,12 @@
 package com.brotjefors.shop.service;
 
+import com.brotjefors.shop.model.Category;
+import com.brotjefors.shop.model.Store;
 import com.brotjefors.shop.model.StoreCategory;
+import com.brotjefors.shop.dto.StoreCategoryDto;
 import com.brotjefors.shop.repository.StoreCategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.brotjefors.shop.repository.CategoryRepository;
+import com.brotjefors.shop.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,10 +14,26 @@ import java.util.Optional;
 @Service
 public class StoreCategoryService {
 
-    @Autowired
     private StoreCategoryRepository storeCategoryRepository;
+    private CategoryRepository categoryRepository;
+    private StoreRepository storeRepository;
 
-    public StoreCategory saveStoreCategory(StoreCategory storeCategory) {
+    public StoreCategoryService(StoreCategoryRepository storeCategoryRepository, CategoryRepository categoryRepository, StoreRepository storeRepository){
+        this.storeCategoryRepository = storeCategoryRepository;
+        this.categoryRepository = categoryRepository;
+        this.storeRepository = storeRepository;
+    }
+
+    public StoreCategory saveStoreCategory(StoreCategoryDto storeCategoryDto) {
+
+        StoreCategory storeCategory = new StoreCategory();
+        Category category = categoryRepository.findById(storeCategoryDto.getCategoryId())
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+        Store store = storeRepository.findById(storeCategoryDto.getStoreId())
+            .orElseThrow(() -> new RuntimeException("Store not found"));
+        storeCategory.setCategory(category);
+        storeCategory.setStore(store);
+        storeCategory.setCategoryOrder(storeCategoryDto.getOrder());
         return storeCategoryRepository.save(storeCategory);
     }
 
@@ -28,6 +48,4 @@ public class StoreCategoryService {
     public void deleteStoreCategory(Long id) {
         storeCategoryRepository.deleteById(id);
     }
-
-    // Additional methods as needed
 }
