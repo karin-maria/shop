@@ -14,72 +14,95 @@
     </header>
 
     <div class="grid-container">
-        <div id="categoriesAndItemsDiv">
-            <h2>Create new category</h2>
-            <form id="addCategoryForm" onsubmit="submitCategoryForm(event)">
-                <input type="text" name="name" placeholder="Category Name" required>
-                <button type="submit">Add Category</button>
-            </form>
+        <div class="grid-item">
+            <h2>CREATE</h2>
+            <div class="content">
+                <h3>Create new Category</h3>
+                <form id="addCategoryForm" onsubmit="submitCategoryForm(event)">
+                    <input type="text" name="name" placeholder="Category Name" required>
+                    <button type="submit">Add Category</button>
+                </form>
 
-            <h2>Create new item</h2>
-            <form id="addItemForm" onsubmit="submitItemForm(event)">
-                <input type="text" name="name" placeholder="Item Name" required>
-                <label for="categorySelect">Category:</label>
-                <select id="categorySelect">
-                    <!-- Categories will be populated here -->
-                </select>
-                <button type="submit">Add Item</button>
-            </form>
-        </div>
+                <h3>Create new Item</h3>
+                <form id="addItemForm" onsubmit="submitItemForm(event)">
+                    <input type="text" name="name" placeholder="Item Name" required>
+                    <label for="categorySelect">Category:</label>
+                    <select id="categorySelect">
+                        <!-- Categories will be populated here -->
+                    </select>
+                    <button type="submit">Add Item</button>
+                </form>
 
-        <div id="shoppingListsDiv">
+                <h3>Create new Store</h3>
+                <form id="addStoreForm">
+                    <input type="text" id="storeName" name="storeName" placeholder="Store Name" required>
+                    <button type="submit" onclick="addStore()">Add Store</button>
+                </form>
 
-            <h2>Add item to Shopping List</h2>
-            <div>
-                <input type="text" id="listName" placeholder="Shopping List Name" required>
-                <label for="itemSelect">Item:</label>
-                <select id="itemSelect">
-                    <!-- Items will be populated here -->
-                </select>
-                <input type="number" id="quantity" placeholder="Quantity" min="1" required>
-                <button onclick="addItemToList()">Add Item to List</button>
-            </div>
-            <h2>Create New Shopping List</h2>
-            <div id="itemList">
-                <!-- Added items will be listed here -->
-            </div>
-            <button onclick="createShoppingList(event)">Create Shopping List</button>
-
-            <h2>Select a Shopping List</h2>
-            <select id="shoppingListsSelect" onchange="fetchAndDisplayShoppingList()">
-                <!-- Shopping lists will be populated here -->
-            </select>
-            <div id="shoppingListDetails">
-                <!-- Shopping list details will be displayed here -->
+                <h3>Create new Shopping List</h3>
+                <div>
+                    <input type="text" id="listName" placeholder="Shopping List Name" required>
+                    <label for="itemSelect">Item:</label>
+                    <select id="itemSelect">
+                        <!-- Items will be populated here -->
+                    </select>
+                    <input type="number" id="quantity" placeholder="Quantity" min="1" required>
+                    <button onclick="addItemToList()">Add Item to List</button>
+                </div>
+                <div id="itemList">
+                    <!-- Added items will be listed here -->
+                </div>
+                <button onclick="createShoppingList(event)">Create Shopping List</button>
             </div>
         </div>
 
-        <div id="storesDiv">
-            <h2>Create new store</h2>
-            <form id="addStoreForm">
-                <input type="text" id="storeName" name="storeName" placeholder="Store Name" required>
-                <button type="button" onclick="addStore()">Add Store</button>
-            </form>
 
-            <h2>Add Category to Store</h2>
-            <form id="addCategoryToStoreForm">
-                <label for="storeSelect">Store:</label>
-                <select id="storeSelect">
-                    <!-- Stores will be populated here -->
-                </select>
-                <label for="categoryForStore">Category:</label>
-                <select id="categoryForStore">
-                    <!-- Category options will be added here -->
-                </select>
-                <input type="number" id="categoryOrder" name="categoryOrder" placeholder="Category Order" required>
-                <button type="button" onclick="addCategoryToStore()">Add Category to Store</button>
-            </form>
+        <div class="grid-item">
+            <h2>SHOPPING LIST</h2>
+            <div class="content">
 
+                <h3>Select Shopping List</h3>
+                <select id="shoppingListsSelect" onchange="fetchAndDisplayShoppingList()">
+                    <!-- Shopping lists will be populated here -->
+                </select>
+
+                <h3>Shopping List Items:</h3>
+                <div id="shoppingListDetails" class="item-lists">
+                    <!-- Shopping list details will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid-item">
+            <h2>STORE</h2>
+            <div class="content">
+                <h3>Add Category to Store</h3>
+                <form id="addCategoryToStoreForm">
+                    <label for="storeSelect">Store:</label>
+                    <select id="storeSelect">
+                        <!-- Stores will be populated here -->
+                    </select>
+                    <label for="categoryForStore">Category:</label>
+                    <select id="categoryForStore">
+                        <!-- Category options will be added here -->
+                    </select>
+                    <input type="number" id="categoryOrder" name="categoryOrder" placeholder="Category Order" required>
+                    <button type="button" onclick="addCategoryToStore()">Add Category to Store</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="grid-item">
+            <h2>SORT</h2>
+            <div class="content">
+                <h3>Sort Shopping List</h3>
+                <button type="button" onclick="sortShoppingList()">Sort shopping List</button>
+                <div id="sortedListDiv" class="item-lists">
+                    <!-- Sorted Shopping list details will be displayed here -->
+                </div>
+            </div>
         </div>
     </div>
 </body>

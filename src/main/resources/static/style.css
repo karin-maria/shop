@@ -2,6 +2,7 @@
 header {
     font-size: 25px;
     font-family: Arial, sans-serif;
+    text-align: center;
 }
 
 
@@ -12,18 +13,58 @@ body {
     padding: 20px;
 }
 
+form, div {
+    background-color: #fff;
+}
+
+form {
+    padding: 20px;
+    margin: 15px;
+}
+
+div {
+    padding: 5px;
+    margin: 5px;
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 5px;
+    background-color: #f4f4f4;
   }
 
+.grid-item {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 5px;
+    background-color: #f4f4f4;
+  }
 
-  #categoriesAndItemsDiv, #shoppingListsDiv, #storesDiv  {
-    width: 100%;
-    padding: 10%;
-    box-sizing: border-box;
-}
+  .grid-item h2 {
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+  }
+
+  #shoppingListDetails {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+
+  .item-lists {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    margin: 2px;
+    padding: 2px;
+    gap: 1px 10px;
+  }
+
+  .content {
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
 
 input[type=text], select, input[type=number] {
     width: 100%;
@@ -48,26 +89,6 @@ button {
 
 button:hover {
     background-color: #777;
-}
-
-form, div {
-    border-radius: 5px;
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    padding: 8px;
-    margin-bottom: 2px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
 }
 
 #shoppingListsSelect {

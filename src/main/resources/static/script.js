@@ -29,6 +29,7 @@ function fetchShoppingLists() {
                 let option = new Option(list.name, list.id);
                 select.add(option);
             });
+            fetchAndDisplayShoppingList()
         })
         .catch(error => console.error('Failed to load shopping lists:', error));
 }
@@ -149,7 +150,8 @@ function addItemToList() {
     });
 
     const itemList = document.getElementById('itemList');
-    itemList.innerHTML += `<li>${itemName} - Quantity: ${quantity}</li>`;
+    itemList.innerHTML += `<div class="item">${itemName}</div>`;
+    itemList.innerHTML += `<div class="item">${quantity}</div>`;
 
     itemSelect.selectedIndex = 0;
     quantityInput.value = '';
@@ -197,9 +199,9 @@ function fetchAndDisplayShoppingList() {
         .then(response => response.json())
         .then(data => {
             const detailsDiv = document.getElementById('shoppingListDetails');
-            detailsDiv.innerHTML = `<h3>${data.name}</h3>`;
             data.items.forEach(item => {
-                detailsDiv.innerHTML += `<p>${item.item.name} - Quantity: ${item.quantity}</p>`;
+                detailsDiv.innerHTML += `<div class="item">${item.item.name}</div>`;
+                detailsDiv.innerHTML += `<div class="item">${item.quantity}</div>`;
             });
         })
         .catch(error => console.error('Failed to load shopping list details:', error));
@@ -261,4 +263,23 @@ function addCategoryToStore() {
         console.error('Error adding category to store:', error);
         alert('Failed to add category to store.');
     });
+}
+
+function sortShoppingList() {
+    const id = document.getElementById('shoppingListsSelect').value;
+    fetch(`/api/shoppingLists/${id}`)
+        .then(response => response.json())
+        .then(data => {
+
+            data.items.sort((a, b) => b.item.category.order - a.item.category.order);
+
+            const sortedDiv = document.getElementById('sortedListDiv');
+            sortedDiv.innerHTML = '';
+
+            data.items.forEach(item => {
+                sortedDiv.innerHTML += `<div class="item">${item.item.name}</div>`;
+                sortedDiv.innerHTML += `<div class="item">${item.quantity}</div>`;
+            });
+        })
+        .catch(error => console.error('Failed to load shopping list details:', error));
 }
