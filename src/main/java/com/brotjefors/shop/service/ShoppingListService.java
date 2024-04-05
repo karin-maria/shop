@@ -1,12 +1,16 @@
 package com.brotjefors.shop.service;
 
+import com.brotjefors.shop.dto.ListItemDto;
 import com.brotjefors.shop.dto.ShoppingListDto;
 import com.brotjefors.shop.model.Item;
 import com.brotjefors.shop.model.ListItem;
 import com.brotjefors.shop.model.ShoppingList;
 import com.brotjefors.shop.repository.ItemRepository;
 import com.brotjefors.shop.repository.ShoppingListRepository;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +21,12 @@ public class ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
     private final ItemRepository itemRepository;
+    private ItemService itemService;
 
-    public ShoppingListService(ShoppingListRepository shoppingListRepository, ItemRepository itemRepository) {
+    public ShoppingListService(ShoppingListRepository shoppingListRepository, ItemRepository itemRepository, ItemService itemService) {
         this.shoppingListRepository = shoppingListRepository;
         this.itemRepository = itemRepository;
+        this.itemService = itemService;
     }
 
     public ShoppingList saveShoppingList(ShoppingListDto shoppingListDto) {
@@ -74,5 +80,19 @@ public class ShoppingListService {
         } else {
             return false;
         }
+    }
+
+    public ShoppingList addItemToShoppingList(ListItemDto listItemDto) {
+        ShoppingList shoppingList = findShoppingListById(listItemDto.getListId());
+        Item item = itemService.findItemById(listItemDto.getItemId());
+        // Create new ListItem
+        ListItem listItem = new ListItem();
+        listItem.setShoppingList(shoppingList);
+        listItem.setItem(item);
+        listItem.setQuantity(listItemDto.getQuantity());
+
+        // Add new listItem to shoppingList
+        shoppingList.addItem(listItem);
+        return shoppingListRepository.save(shoppingList);
     }
 }

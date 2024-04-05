@@ -15,6 +15,12 @@ function fetchItems() {
                 let option = new Option(item.name, item.id);
                 itemSelect.add(option);
             });
+            const itemSelect2 = document.getElementById('itemSelect2');
+            itemSelect2.innerHTML = '';
+            data.forEach(item => {
+                let option = new Option(item.name, item.id);
+                itemSelect2.add(option);
+            });
         })
         .catch(error => console.error('Error fetching items:', error));
 }
@@ -157,6 +163,42 @@ function addItemToList() {
     quantityInput.value = '';
 }
 
+function addItemToExistingList(event) {
+    event.preventDefault();
+    const listId = document.getElementById('shoppingListsSelect').value;
+    const itemSelect = document.getElementById('itemSelect2');
+    const quantityInput = document.getElementById('quantity2');
+    const itemId = itemSelect.value;
+    const quantity = quantityInput.value;
+
+    if (!itemId || quantity <= 0) {
+        alert('Please select an item and enter a positive quantity.');
+        return;
+    }
+
+    fetch(`/api/shoppingLists/${listId}/addItem`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            listId: listId,
+            itemId: itemId,
+            quantity: quantity
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        document.getElementById('shoppingListDetails').innerHTML = '';
+        fetchShoppingLists();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        console.log(response)
+        console.log(response.body)
+        alert('Failed to create the shopping list.');
+    });
+}
+
 function createShoppingList(event) {
     event.preventDefault();
     const listNameInput = document.getElementById('listName');
@@ -199,6 +241,7 @@ function fetchAndDisplayShoppingList() {
         .then(response => response.json())
         .then(data => {
             const detailsDiv = document.getElementById('shoppingListDetails');
+            detailsDiv.innerHTML = "";
             data.items.forEach(item => {
                 detailsDiv.innerHTML += `<div class="item">${item.item.name}</div>`;
                 detailsDiv.innerHTML += `<div class="item">${item.quantity}</div>`;

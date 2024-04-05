@@ -56,4 +56,8 @@ public class ShoppingList {
     public void setItems(Set<ListItem> items) {
         this.items = items;
     }
+
+    public void addItem(ListItem item) {
+        this.items.add(item);
+    }
 }

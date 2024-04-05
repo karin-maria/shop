@@ -32,12 +32,12 @@ public class ShoppingListDto {
 
     public static class ItemDetailDto {
         private Long itemId;
-        private Integer quantity;
+        private Long quantity;
 
         public ItemDetailDto() {
         }
 
-        public ItemDetailDto(Long itemId, Integer quantity) {
+        public ItemDetailDto(Long itemId, Long quantity) {
             this.itemId = itemId;
             this.quantity = quantity;
         }
@@ -46,7 +46,7 @@ public class ShoppingListDto {
             return itemId;
         }
 
-        public Integer getQuantity() {
+        public Long getQuantity() {
             return quantity;
         }
 
@@ -54,7 +54,7 @@ public class ShoppingListDto {
             this.itemId = itemId;
         }
 
-        public void setQuantity(Integer quantity) {
+        public void setQuantity(Long quantity) {
             this.quantity = quantity;
         }
     }

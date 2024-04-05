@@ -66,6 +66,14 @@
                     <!-- Shopping lists will be populated here -->
                 </select>
 
+                <h3>Add Item</h3>
+                <label for="itemSelect2">Item:</label>
+                    <select id="itemSelect2">
+                        <!-- Items will be populated here -->
+                    </select>
+                    <input type="number" id="quantity2" placeholder="Quantity" min="1" required>
+                    <button onclick="addItemToExistingList(event)">Add Item to List</button>
+
                 <h3>Shopping List Items:</h3>
                 <div id="shoppingListDetails" class="item-lists">
                     <!-- Shopping list details will be displayed here -->

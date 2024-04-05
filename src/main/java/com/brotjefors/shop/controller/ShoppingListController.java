@@ -1,7 +1,11 @@
 package com.brotjefors.shop.controller;
 
+import com.brotjefors.shop.dto.ListItemDto;
 import com.brotjefors.shop.dto.ShoppingListDto;
+import com.brotjefors.shop.model.Item;
+import com.brotjefors.shop.model.ListItem;
 import com.brotjefors.shop.model.ShoppingList;
+import com.brotjefors.shop.service.ItemService;
 import com.brotjefors.shop.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +17,11 @@ import java.util.List;
 @RequestMapping("/api/shoppingLists")
 public class ShoppingListController {
 
-    @Autowired
     private ShoppingListService shoppingListService;
+
+    public ShoppingListController(ShoppingListService shoppingListService) {
+        this.shoppingListService = shoppingListService;
+    }
 
     @PostMapping("/add")
     public ShoppingList createShoppingList(@RequestBody ShoppingListDto shoppingListDto) {
@@ -54,5 +61,10 @@ public class ShoppingListController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/{id}/addItem")
+    public ShoppingList addItemToShoppingList(@RequestBody ListItemDto listItemDto) {
+            return shoppingListService.addItemToShoppingList(listItemDto);
     }
 }

@@ -32,7 +32,7 @@ public class ListItem {
     private ShoppingList shoppingList;
 
     @Column(name="quantity")
-    private int quantity;
+    private Long quantity;
 
     public ListItem() {
     }
@@ -61,11 +61,11 @@ public class ListItem {
         this.shoppingList = shoppingList;
     }
 
-    public int getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 }
