@@ -6,7 +6,9 @@ import com.brotjefors.shop.service.StoreCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/storeCategories")
@@ -14,6 +16,12 @@ public class StoreCategoryController {
 
     @Autowired
     private StoreCategoryService storeCategoryService;
+
+    @GetMapping("/all")
+    public List<StoreCategory> getAllStoreCategories() {
+        return storeCategoryService.findAllStoreCategories();
+    }
+
 
     @PostMapping("/add")
     public StoreCategory addStoreCategory(@RequestBody StoreCategoryDto storeCategoryDto) {

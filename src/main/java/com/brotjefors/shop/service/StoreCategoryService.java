@@ -10,6 +10,7 @@ import com.brotjefors.shop.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class StoreCategoryService {
@@ -23,6 +24,11 @@ public class StoreCategoryService {
         this.categoryRepository = categoryRepository;
         this.storeRepository = storeRepository;
     }
+
+    public List<StoreCategory> findAllStoreCategories() {
+        return storeCategoryRepository.findAll();
+    }
+
 
     public StoreCategory saveStoreCategory(StoreCategoryDto storeCategoryDto) {
 

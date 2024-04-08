@@ -87,7 +87,7 @@
             <div class="content">
                 <h3>Add Category to Store</h3>
                 <form id="addCategoryToStoreForm">
-                    <label for="storeSelect">Store:</label>
+                    <label for="storeSelect">Select Store:</label>
                     <select id="storeSelect" onchange="fetchAndDisplayStoreCategories()">
                         <!-- Stores will be populated here -->
                     </select>
@@ -99,6 +99,11 @@
                     </select>
                     <input type="number" id="categoryOrder" name="categoryOrder" placeholder="Category Order" required>
                     <button type="button" onclick="addCategoryToStore()">Add Category to Store</button>
+                    <label for="storeCategorySelect">Select Store Category:</label>
+                    <select id="storeCategorySelect">
+                        <!-- Stores will be populated here -->
+                    </select>
+                    <button id="deleteStoreCategoryButton" onclick="deleteStoreCategory()">Delete Store Category</button>
                 </form>
                 <h3>Store Categories and order:</h3>
                 <div id="storeCategoriesDiv" class="item-lists">

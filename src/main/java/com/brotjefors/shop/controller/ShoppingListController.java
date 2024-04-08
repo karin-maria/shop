@@ -5,13 +5,13 @@ import com.brotjefors.shop.dto.ShoppingListDto;
 import com.brotjefors.shop.model.Item;
 import com.brotjefors.shop.model.ListItem;
 import com.brotjefors.shop.model.ShoppingList;
-import com.brotjefors.shop.service.ItemService;
 import com.brotjefors.shop.service.ShoppingListService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/shoppingLists")
@@ -45,7 +45,10 @@ public class ShoppingListController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ShoppingList> updateShoppingList(@PathVariable Long id, @RequestBody ShoppingList shoppingListDetails) {
+    public ResponseEntity<ShoppingList> updateShoppingList(
+            @PathVariable Long id,
+            @RequestBody ShoppingList shoppingListDetails) {
+
         ShoppingList updatedShoppingList = shoppingListService.updateShoppingList(id, shoppingListDetails);
         if(updatedShoppingList != null) {
             return ResponseEntity.ok(updatedShoppingList);
@@ -67,4 +70,18 @@ public class ShoppingListController {
     public ShoppingList addItemToShoppingList(@RequestBody ListItemDto listItemDto) {
             return shoppingListService.addItemToShoppingList(listItemDto);
     }
+
+    @GetMapping("/{id}/sort")
+    public ResponseEntity<List<ListItem>> getSortedShoppingListItems(
+            @PathVariable Long id,
+            @RequestParam("storeId") Long storeId) {
+
+        try {
+            List<ListItem> sortedItems = shoppingListService.sortShoppingList(id, storeId);
+            return ResponseEntity.ok(sortedItems);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
 }

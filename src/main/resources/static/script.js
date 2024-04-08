@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchShoppingLists();
     fetchCategories();
     fetchStores();
+    fetchStoreCategories();
+    fetchAndDisplayStoreCategories()
 });
 
 function fetchItems() {
@@ -69,6 +71,20 @@ function fetchStores() {
             data.forEach(store => {
                 let option = new Option(store.name, store.id);
                 storeSelect.add(option);
+            });
+        })
+        .catch(error => console.error('Error fetching items:', error));
+}
+
+function fetchStoreCategories() {
+    fetch('/api/storeCategories/all')
+        .then(response => response.json())
+        .then(data => {
+            const storeCategorySelect = document.getElementById('storeCategorySelect');
+            storeCategorySelect.innerHTML = '';
+            data.forEach(storeCategory => {
+                let option = new Option(storeCategory.category.name, storeCategory.id);
+                storeCategorySelect.add(option);
             });
         })
         .catch(error => console.error('Error fetching items:', error));
@@ -237,6 +253,10 @@ function createShoppingList(event) {
 // VIEW
 function fetchAndDisplayShoppingList() {
     const id = document.getElementById('shoppingListsSelect').value;
+    if (!id) {
+        console.error('No ID selected');
+        return;
+    }
     fetch(`/api/shoppingLists/${id}`)
         .then(response => response.json())
         .then(data => {
@@ -312,6 +332,43 @@ function deleteStore(){
     });
 }
 
+function deleteStoreCategory(){
+    const storeCategoryId = document.getElementById('storeCategorySelect').value;
+
+    if (!storeCategoryId) {
+        alert('Please select a store category to delete.');
+        return;
+    }
+    fetch(`/api/storeCategories/${storeCategoryId}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        if (response.status === 204 || response.headers.get("Content-Length") === "0") {
+            console.log('Store Category deleted successfully');
+            return null; // Return null or a custom message since there's no JSON to parse
+        } else {
+            return response.json();
+        }
+    })
+    .then(data => {
+        if (data) {
+            console.log('Response data:', data);
+        } else {
+            console.log('Store Category deleted successfully, no content returned');
+        }
+    })
+    .then(() => {
+        fetchStoreCategories();
+        fetchAndDisplayStoreCategories();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 function addCategoryToStore() {
     const storeId = document.getElementById('storeSelect').value;
     const categoryId = document.getElementById('categoryForStore').value;
@@ -336,6 +393,10 @@ function addCategoryToStore() {
         console.log('Category added to store:', data);
         // Reset the form or additional UI actions
         document.getElementById('addCategoryToStoreForm').reset();
+    })
+    .then(() => {
+        fetchStoreCategories();
+        fetchAndDisplayStoreCategories();
     })
     .catch(error => {
         console.error('Error adding category to store:', error);
@@ -371,21 +432,38 @@ function fetchAndDisplayStoreCategories() {
         });
 }
 
+
 function sortShoppingList() {
-    const id = document.getElementById('shoppingListsSelect').value;
-    fetch(`/api/shoppingLists/${id}`)
-        .then(response => response.json())
+    const shoppingListSelect = document.getElementById('shoppingListsSelect');
+    const storeSelect = document.getElementById('storeSelect');
+    const sortedDiv = document.getElementById('sortedListDiv');
+
+    const shoppingListId = shoppingListSelect.value;
+    const storeId = storeSelect.value;
+
+    if (!shoppingListId || !storeId) {
+        alert('Please select both a shopping list and a store.');
+        return;
+    }
+
+    fetch(`/api/shoppingLists/${shoppingListId}/sort?storeId=${storeId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-
-            data.items.sort((a, b) => b.item.category.order - a.item.category.order);
-
-            const sortedDiv = document.getElementById('sortedListDiv');
+            // Clear previous content
             sortedDiv.innerHTML = '';
 
-            data.items.forEach(item => {
+            data.forEach(item => {
                 sortedDiv.innerHTML += `<div class="item">${item.item.name}</div>`;
                 sortedDiv.innerHTML += `<div class="item">${item.quantity}</div>`;
             });
         })
-        .catch(error => console.error('Failed to load shopping list details:', error));
+        .catch(error => {
+            console.error('Fetch Error:', error);
+            sortedDiv.innerHTML = 'Failed to load the sorted shopping list.';
+        });
 }

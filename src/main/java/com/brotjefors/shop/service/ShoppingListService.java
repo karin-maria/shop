@@ -5,8 +5,11 @@ import com.brotjefors.shop.dto.ShoppingListDto;
 import com.brotjefors.shop.model.Item;
 import com.brotjefors.shop.model.ListItem;
 import com.brotjefors.shop.model.ShoppingList;
+import com.brotjefors.shop.model.StoreCategory;
 import com.brotjefors.shop.repository.ItemRepository;
+import com.brotjefors.shop.repository.ListItemRepository;
 import com.brotjefors.shop.repository.ShoppingListRepository;
+import com.brotjefors.shop.repository.StoreCategoryRepository;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,17 +18,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Comparator;
+
 
 @Service
 public class ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
     private final ItemRepository itemRepository;
+    private final StoreCategoryRepository storeCategoryRepository;
+    private final ListItemRepository listItemRepository;
     private ItemService itemService;
 
-    public ShoppingListService(ShoppingListRepository shoppingListRepository, ItemRepository itemRepository, ItemService itemService) {
+    public ShoppingListService(
+            ShoppingListRepository shoppingListRepository,
+            ItemRepository itemRepository,
+            StoreCategoryRepository storeCategoryRepository,
+            ListItemRepository listItemRepository,
+            ItemService itemService) {
         this.shoppingListRepository = shoppingListRepository;
         this.itemRepository = itemRepository;
+        this.storeCategoryRepository = storeCategoryRepository;
+        this.listItemRepository = listItemRepository;
         this.itemService = itemService;
     }
 
@@ -94,5 +110,25 @@ public class ShoppingListService {
         // Add new listItem to shoppingList
         shoppingList.addItem(listItem);
         return shoppingListRepository.save(shoppingList);
+    }
+
+    /**
+     * Sorts items in a shopping list based on the category order in a specified store.
+     *
+     * @param shoppingListId The ID of the shopping list to sort.
+     * @param storeId The ID of the store used to determine category order.
+     * @return A sorted list of Items.
+     */
+    public List<ListItem> sortShoppingList(Long shoppingListId, Long storeId) {
+        List<StoreCategory> storeCategories = storeCategoryRepository.findByStoreId(storeId);
+        Map<Long, Integer> categoryIdToOrder = new HashMap<>();
+        storeCategories.forEach(sc -> categoryIdToOrder.put(sc.getCategory().getId(), sc.getCategoryOrder().intValue()));
+
+        List<ListItem> listItems = listItemRepository.findByShoppingListId(shoppingListId);
+
+
+        return listItems.stream()
+                .sorted(Comparator.comparingInt(item -> categoryIdToOrder.getOrDefault(item.getItem().getCategory().getId(), Integer.MAX_VALUE)))
+                .collect(Collectors.toList());
     }
 }
