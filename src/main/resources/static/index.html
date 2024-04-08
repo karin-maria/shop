@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1>Shop</h1>
+        <h1>SHOP</h1>
     </header>
 
     <div class="grid-container">
@@ -88,16 +88,22 @@
                 <h3>Add Category to Store</h3>
                 <form id="addCategoryToStoreForm">
                     <label for="storeSelect">Store:</label>
-                    <select id="storeSelect">
+                    <select id="storeSelect" onchange="fetchAndDisplayStoreCategories()">
                         <!-- Stores will be populated here -->
                     </select>
-                    <label for="categoryForStore">Category:</label>
+                    <label for="deleteStoreButton">Delete Store:</label>
+                    <button id="deleteStoreButton" onclick="deleteStore()">Delete Store</button>
+                    <label for="categoryForStore">Add category:</label>
                     <select id="categoryForStore">
                         <!-- Category options will be added here -->
                     </select>
                     <input type="number" id="categoryOrder" name="categoryOrder" placeholder="Category Order" required>
                     <button type="button" onclick="addCategoryToStore()">Add Category to Store</button>
                 </form>
+                <h3>Store Categories and order:</h3>
+                <div id="storeCategoriesDiv" class="item-lists">
+                    <!-- Store category details will be displayed here -->
+                </div>
             </div>
         </div>
 

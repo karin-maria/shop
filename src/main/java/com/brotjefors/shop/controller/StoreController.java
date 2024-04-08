@@ -1,6 +1,7 @@
 package com.brotjefors.shop.controller;
 
 import com.brotjefors.shop.model.Store;
+import com.brotjefors.shop.model.StoreCategory;
 import com.brotjefors.shop.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,11 @@ public class StoreController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/{id}/categories")
+    public List<StoreCategory> getStoreCategories(@PathVariable("id") Long storeId) {
+        return storeService.getStoreCategories(storeId);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Store> updateStore(@PathVariable Long id, @RequestBody Store storeDetails) {
         Store updatedStore = storeService.updateStore(id, storeDetails);
@@ -44,7 +50,11 @@ public class StoreController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStore(@PathVariable Long id) {
-        storeService.deleteStore(id);
-        return ResponseEntity.ok().build();
+        try {
+            storeService.deleteStore(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -4,8 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="STORES")
@@ -18,6 +25,10 @@ public class Store {
 
     @Column(name="name")
     private String name;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<StoreCategory> storeCategories = new HashSet<>();
 
     public Store() {
     }
@@ -41,5 +52,13 @@ public class Store {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<StoreCategory> getStoreCategories() {
+        return storeCategories;
+    }
+
+    public void setStoreCategories(Set<StoreCategory> storeCategories) {
+        this.storeCategories = storeCategories;
     }
 }

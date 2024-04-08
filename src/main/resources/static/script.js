@@ -273,7 +273,42 @@ function addStore() {
     })
     .catch(error => {
         console.error('Error adding store:', error);
-        alert('Failed to add store.');
+    });
+}
+
+function deleteStore(){
+    const storeId = document.getElementById('storeSelect').value;
+
+    if (!storeId) {
+        alert('Please select a store to delete.');
+        return;
+    }
+    fetch(`/api/stores/${storeId}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        if (response.status === 204 || response.headers.get("Content-Length") === "0") {
+            console.log('Store deleted successfully');
+            return null; // Return null or a custom message since there's no JSON to parse
+        } else {
+            return response.json();
+        }
+    })
+    .then(data => {
+        if (data) {
+            console.log('Response data:', data);
+        } else {
+            console.log('Store deleted successfully, no content returned');
+        }
+    })
+    .then(() => {
+        fetchStores();
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 }
 
@@ -306,6 +341,34 @@ function addCategoryToStore() {
         console.error('Error adding category to store:', error);
         alert('Failed to add category to store.');
     });
+}
+
+function fetchAndDisplayStoreCategories() {
+    const storeId = document.getElementById('storeSelect').value;
+    if (!storeId) {
+        document.getElementById('storeCategoriesDiv').innerHTML = 'Please select a store.';
+        return;
+    }
+
+    fetch(`/api/stores/${storeId}/categories`)
+        .then(response => response.json())
+        .then(data => {
+            const displayDiv = document.getElementById('storeCategoriesDiv');
+            // Clear previous content
+            displayDiv.innerHTML = '';
+            if (data.length === 0) {
+                displayDiv.innerHTML = 'No categories found for this store.';
+                return;
+            }
+            data.forEach(storeCategory => {
+                displayDiv.innerHTML += `<div class="item">${storeCategory.category.name}</div>`;
+                displayDiv.innerHTML += `<div class="item">${storeCategory.categoryOrder}</div>`;
+            });
+        })
+        .catch(error => {
+            console.error('Failed to load store categories:', error);
+            document.getElementById('storeCategoriesDiv').innerHTML = 'Failed to load categories.';
+        });
 }
 
 function sortShoppingList() {
