@@ -17,7 +17,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category saveCategory(Category category) {
+    public Category addCategory(Category category) {
         return categoryRepository.findByName(category.getName())
                 .orElseGet(() -> categoryRepository.save(category));
     }

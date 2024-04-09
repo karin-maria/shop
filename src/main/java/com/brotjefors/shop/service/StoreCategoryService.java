@@ -30,7 +30,7 @@ public class StoreCategoryService {
     }
 
 
-    public StoreCategory saveStoreCategory(StoreCategoryDto storeCategoryDto) {
+    public StoreCategory addStoreCategory(StoreCategoryDto storeCategoryDto) {
 
         StoreCategory storeCategory = new StoreCategory();
         Category category = categoryRepository.findById(storeCategoryDto.getCategoryId())

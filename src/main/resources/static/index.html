@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/script.js"></script>
+    <script src="javascript/items.js"></script>
+    <script src="javascript/categories.js"></script>
+    <script src="javascript/shoppinglists.js"></script>
+    <script src="javascript/stores.js"></script>
 </head>
 
 <body>
@@ -15,15 +19,15 @@
 
     <div class="grid-container">
         <div class="grid-item">
-            <h2>CREATE</h2>
+            <h2>ADD</h2>
             <div class="content">
-                <h3>Create new Category</h3>
+                <h3>Add Category</h3>
                 <form id="addCategoryForm" onsubmit="submitCategoryForm(event)">
                     <input type="text" name="name" placeholder="Category Name" required>
-                    <button type="submit">Add Category</button>
+                    <button type="submit" >Add Category</button>
                 </form>
 
-                <h3>Create new Item</h3>
+                <h3>Add Item</h3>
                 <form id="addItemForm" onsubmit="submitItemForm(event)">
                     <input type="text" name="name" placeholder="Item Name" required>
                     <label for="categorySelect">Category:</label>
@@ -33,26 +37,28 @@
                     <button type="submit">Add Item</button>
                 </form>
 
-                <h3>Create new Store</h3>
-                <form id="addStoreForm">
+                <h3>Add Store</h3>
+                <form id="addStoreForm" onsubmit="submitStoreForm(event)">
                     <input type="text" id="storeName" name="storeName" placeholder="Store Name" required>
-                    <button type="submit" onclick="addStore()">Add Store</button>
+                    <button type="submit">Add Store</button>
                 </form>
 
-                <h3>Create new Shopping List</h3>
+                <h3>Add Shopping List</h3>
                 <div>
-                    <input type="text" id="listName" placeholder="Shopping List Name" required>
-                    <label for="itemSelect">Item:</label>
-                    <select id="itemSelect">
-                        <!-- Items will be populated here -->
-                    </select>
-                    <input type="number" id="quantity" placeholder="Quantity" min="1" required>
-                    <button onclick="addItemToList()">Add Item to List</button>
+                    <form id="addListForm">
+                        <input type="text" id="listName" placeholder="Shopping List Name" required>
+                        <label for="itemSelect">Item:</label>
+                        <select id="itemSelect">
+                            <!-- Items will be populated here -->
+                        </select>
+                        <input type="number" id="quantity" placeholder="Quantity" min="1" required>
+                        <button onclick="addItemToList()">Add Item to List</button>
+                    </form>
                 </div>
-                <div id="itemList">
+                <div id="itemList" class="item-lists">
                     <!-- Added items will be listed here -->
                 </div>
-                <button onclick="createShoppingList(event)">Create Shopping List</button>
+                <button id="addShoppingListButton">Create Shopping List</button>
             </div>
         </div>
 
@@ -60,20 +66,21 @@
         <div class="grid-item">
             <h2>SHOPPING LIST</h2>
             <div class="content">
-
                 <h3>Select Shopping List</h3>
-                <select id="shoppingListsSelect" onchange="fetchAndDisplayShoppingList()">
-                    <!-- Shopping lists will be populated here -->
-                </select>
+                <form id="addItemToListForm">
+                    <label for="shoppingListsSelect">Select Shopping List:</label>
+                    <select id="shoppingListsSelect" onchange="fetchAndDisplayShoppingList(); fetchAndDisplaySortedList();">
+                        <!-- Shopping lists will be populated here -->
+                    </select>
 
-                <h3>Add Item</h3>
-                <label for="itemSelect2">Item:</label>
+                    <h3>Add Item</h3>
+                    <label for="itemSelect2">Item:</label>
                     <select id="itemSelect2">
                         <!-- Items will be populated here -->
                     </select>
                     <input type="number" id="quantity2" placeholder="Quantity" min="1" required>
-                    <button onclick="addItemToExistingList(event)">Add Item to List</button>
-
+                    <button id="addItemToListButton">Add Item to List</button>
+                </form>
                 <h3>Shopping List Items:</h3>
                 <div id="shoppingListDetails" class="item-lists">
                     <!-- Shopping list details will be displayed here -->
@@ -88,7 +95,7 @@
                 <h3>Add Category to Store</h3>
                 <form id="addCategoryToStoreForm">
                     <label for="storeSelect">Select Store:</label>
-                    <select id="storeSelect" onchange="fetchAndDisplayStoreCategories()">
+                    <select id="storeSelect" onchange="fetchAndDisplayStoreCategories(); fetchAndDisplaySortedList();">
                         <!-- Stores will be populated here -->
                     </select>
                     <label for="deleteStoreButton">Delete Store:</label>
@@ -98,14 +105,14 @@
                         <!-- Category options will be added here -->
                     </select>
                     <input type="number" id="categoryOrder" name="categoryOrder" placeholder="Category Order" required>
-                    <button type="button" onclick="addCategoryToStore()">Add Category to Store</button>
+                    <button type="button" onclick="addCategoryToStore(); fetchAndDisplayStoreCategories(); fetchAndDisplaySortedList();">Add Category to Store</button>
                     <label for="storeCategorySelect">Select Store Category:</label>
                     <select id="storeCategorySelect">
                         <!-- Stores will be populated here -->
                     </select>
-                    <button id="deleteStoreCategoryButton" onclick="deleteStoreCategory()">Delete Store Category</button>
+                    <button id="deleteStoreCategoryButton" onclick="deleteStoreCategory(); fetchStoreCategories(); fetchAndDisplaySortedList();">Delete Store Category</button>
                 </form>
-                <h3>Store Categories and order:</h3>
+                <h3>Store Categories and Order:</h3>
                 <div id="storeCategoriesDiv" class="item-lists">
                     <!-- Store category details will be displayed here -->
                 </div>
@@ -117,7 +124,7 @@
             <h2>SORT</h2>
             <div class="content">
                 <h3>Sort Shopping List</h3>
-                <button type="button" onclick="sortShoppingList()">Sort shopping List</button>
+                <button type="button" onclick="fetchAndDisplaySortedList()">Sort shopping List</button>
                 <div id="sortedListDiv" class="item-lists">
                     <!-- Sorted Shopping list details will be displayed here -->
                 </div>

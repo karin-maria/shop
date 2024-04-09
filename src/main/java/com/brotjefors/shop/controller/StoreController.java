@@ -17,8 +17,8 @@ public class StoreController {
     private StoreService storeService;
 
     @PostMapping("/add")
-    public Store createStore(@RequestBody Store store) {
-        return storeService.saveStore(store);
+    public Store addStore(@RequestBody Store store) {
+        return storeService.addStore(store);
     }
 
     @GetMapping("/all")

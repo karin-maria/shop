@@ -20,21 +20,21 @@ public class ItemService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Iterable<Item> getAllItems() {
-        return itemRepository.findAll();
-    }
-
-    public Item findItemById(Long id) {
-        return itemRepository.findById(id).orElse(null);
-    }
-
-    public Item saveItem(ItemDto itemDto) {
+    public Item addItem(ItemDto itemDto) {
         Category category = categoryRepository.findById(itemDto.getCategoryId())
                           .orElseThrow(() -> new RuntimeException("Category not found"));
         Item item = new Item();
         item.setName(itemDto.getName());
         item.setCategory(category);
         return itemRepository.save(item);
+    }
+
+    public Iterable<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
+
+    public Item findItemById(Long id) {
+        return itemRepository.findById(id).orElse(null);
     }
 
     public Item updateItem(Long id, ItemDto itemDetailsDto) {

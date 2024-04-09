@@ -15,7 +15,7 @@ public class ListItemController {
 
     @PostMapping("/add")
     public ListItem addListItem(@RequestBody ListItem listItem) {
-        return listItemService.saveListItem(listItem);
+        return listItemService.addListItem(listItem);
     }
 
     @GetMapping("/get/{listId}")

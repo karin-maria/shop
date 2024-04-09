@@ -10,7 +10,7 @@ body {
     font-family: Arial, sans-serif;
     color: #333;
     background-color: #f4f4f4;
-    padding: 20px;
+    padding: 5px;
 }
 
 form, div {
@@ -18,8 +18,8 @@ form, div {
 }
 
 form {
-    padding: 20px;
-    margin: 15px;
+    padding: 10px;
+    margin: 10px;
 }
 
 div {
@@ -27,27 +27,50 @@ div {
     margin: 5px;
 }
 
+/* Phones */
+@media only screen and (max-width: 899px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+}
+
+/* Small desktops */
+@media only screen and (min-width: 900px) and (max-width: 1399px){
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+}
+
+/* Large desktops */
+@media only screen and (min-width: 1400px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
 .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 5px;
     background-color: #f4f4f4;
-  }
+}
 
 .grid-item {
     display: grid;
     grid-template-rows: auto 1fr;
     gap: 5px;
     background-color: #f4f4f4;
-  }
+}
 
-  .grid-item h2 {
+.grid-item h2 {
     margin: 0;
     padding: 10px;
     text-align: center;
-  }
+}
 
-  .item-lists {
+.item-lists {
     display: grid;
     grid-template-columns: 3fr 1fr;
     margin: 2px;
@@ -55,13 +78,13 @@ div {
     gap: 1px 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
-  }
+}
 
-  .content {
+.content {
     padding: 20px;
     border-radius: 5px;
     border: 1px solid #ddd;
-  }
+}
 
 input[type=text], select, input[type=number] {
     width: 100%;
@@ -100,13 +123,4 @@ label {
     font-size: 14px;
     font-weight: bold;
     font-family: Arial, sans-serif;
-}
-
-/* Phones and tablets*/
-@media only screen and (max-width: 1099px) {
-    .grid-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
 }

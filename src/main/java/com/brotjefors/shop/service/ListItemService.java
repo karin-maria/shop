@@ -11,7 +11,7 @@ public class ListItemService {
 
     private ListItemRepository listItemRepository;
 
-    public ListItem saveListItem(ListItem listItem) {
+    public ListItem addListItem(ListItem listItem) {
         return listItemRepository.save(listItem);
     }
 

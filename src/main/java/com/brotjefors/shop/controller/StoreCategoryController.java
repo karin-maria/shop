@@ -17,15 +17,14 @@ public class StoreCategoryController {
     @Autowired
     private StoreCategoryService storeCategoryService;
 
+    @PostMapping("/add")
+    public StoreCategory addStoreCategory(@RequestBody StoreCategoryDto storeCategoryDto) {
+        return storeCategoryService.addStoreCategory(storeCategoryDto);
+    }
+
     @GetMapping("/all")
     public List<StoreCategory> getAllStoreCategories() {
         return storeCategoryService.findAllStoreCategories();
-    }
-
-
-    @PostMapping("/add")
-    public StoreCategory addStoreCategory(@RequestBody StoreCategoryDto storeCategoryDto) {
-        return storeCategoryService.saveStoreCategory(storeCategoryDto);
     }
 
     @GetMapping("/store/{storeId}")

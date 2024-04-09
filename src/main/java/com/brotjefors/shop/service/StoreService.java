@@ -20,7 +20,7 @@ public class StoreService {
         this.storeCategoryRepository = storeCategoryRepository;
     }
 
-    public Store saveStore(Store store) {
+    public Store addStore(Store store) {
         return storeRepository.save(store);
     }
 

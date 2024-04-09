@@ -2,7 +2,6 @@ package com.brotjefors.shop.controller;
 
 import com.brotjefors.shop.dto.ListItemDto;
 import com.brotjefors.shop.dto.ShoppingListDto;
-import com.brotjefors.shop.model.Item;
 import com.brotjefors.shop.model.ListItem;
 import com.brotjefors.shop.model.ShoppingList;
 import com.brotjefors.shop.service.ShoppingListService;
@@ -24,8 +23,8 @@ public class ShoppingListController {
     }
 
     @PostMapping("/add")
-    public ShoppingList createShoppingList(@RequestBody ShoppingListDto shoppingListDto) {
-        return shoppingListService.saveShoppingList(shoppingListDto);
+    public ShoppingList addShoppingList(@RequestBody ShoppingListDto shoppingListDto) {
+        return shoppingListService.addShoppingList(shoppingListDto);
     }
 
     @GetMapping("/all")
