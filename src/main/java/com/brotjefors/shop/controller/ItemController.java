@@ -33,13 +33,13 @@ public class ItemController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody ItemDto itemDetailsDto) {
-    Item updatedItem = itemService.updateItem(id, itemDetailsDto);
-    if(updatedItem != null) {
-        return ResponseEntity.ok(updatedItem);
-    } else {
-        return ResponseEntity.notFound().build();
+        Item updatedItem = itemService.updateItem(id, itemDetailsDto);
+        if(updatedItem != null) {
+            return ResponseEntity.ok(updatedItem);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
     @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable Long id) {
